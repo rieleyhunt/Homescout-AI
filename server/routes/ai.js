@@ -6,12 +6,12 @@ dotenv.config();
 const router = express.Router();
 const openai = new OpenAi({ apiKey: process.env.OPENAI_API_KEY });
 
-router.post("/ask", async (req, res) => {
+router.post("/chat", async (req, res) => {
   try {
-    const { prompt } = req.body;
+    const { userId, message } = req.body;
     const response = await openai.chat.completions.create({
       model: "gpt-4o-mini",
-      messages: [{ role: "user", content: prompt }],
+      messages: [{ role: "user", content: message }],
     });
     res.json({ reply: response.choices[0].message.content });
   } catch (error) {

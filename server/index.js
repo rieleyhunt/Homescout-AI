@@ -12,9 +12,9 @@ app.use(express.json());
 app.use("/api/ai", aiRoutes);
 
 mongoose.connect(process.env.MONGO_URI)
-  .then(() => console.log("✅ MongoDB connected"))
+  .then(() => console.log("MongoDB connected"))
   .catch(err => console.error("Mongo error:", err));
 
 app.get("/", (req, res) => res.send("Server running"));
 
-app.listen(5000, () => console.log("🚀 Server on port 5000"));
+app.listen(5000, () => console.log("Server on port 5000"));
