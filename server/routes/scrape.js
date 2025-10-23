@@ -3,10 +3,10 @@ import { scrapeRealtor } from "../scrapers/realtorScraper.js";
 const router = express.Router();
 
 
-router.get("/realtor-scrape", async (req, res) => {
-    const { location, maxDistance, minPrice, maxPrice } = req.query;
+router.post("/realtor-scrape", async (req, res) => {
+    const { province, city, maxDistance, minPrice, maxPrice } = req.body;
     try {
-        const results = await scrapeRealtor(location, maxDistance, minPrice, maxPrice);
+        const results = await scrapeRealtor(province, city, maxDistance, minPrice, maxPrice);
         res.json({ listings: results });
     } catch (err) {
         console.error(err);

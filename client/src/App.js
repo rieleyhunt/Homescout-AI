@@ -28,7 +28,8 @@ function App() {
     }
   };
 
-  const [location, setLocation] = useState("");
+  const [province, setProvince] = useState("");
+  const [city, setCity] = useState("");
   const [maxDistance, setMaxDistance] = useState("");
   const [minPrice, setMinPrice] = useState("");
   const [maxPrice, setMaxPrice] = useState("");
@@ -41,13 +42,14 @@ function App() {
       const res = await fetch ("http://localhost:5000/api/scrape/realtor-scrape", {
         method: "POST",
         headers: {
-          "Content-Type": "applications/json",
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({
-            location: location,
-            maxDistance: maxDistance,
-            minPrice: minPrice,
-            maxPrice: maxPrice,
+            province,
+            city,
+            maxDistance,
+            minPrice,
+            maxPrice,
         }),
       });
 
@@ -82,18 +84,25 @@ function App() {
 
         <form onSubmit={handleScrape}>
           <div class="mb-3">
-            <label for="locationInput" class="form-label"></label>
+            <label for="provinceInput" class="form-label"></label>
             <input 
               type="text"
               class="form-control" 
-              id="locationInput" placeholder="Location" 
-              value={location} onChange={(e) => setLocation(e.target.value)}>
+              id="provinceInput" placeholder="Province/State" 
+              value={province} onChange={(e) => setProvince(e.target.value)}>
+            </input>
+            <label for="cityInput" class="form-label"></label>
+            <input 
+              type="text"
+              class="form-control" 
+              id="cityInput" placeholder="City" 
+              value={city} onChange={(e) => setCity(e.target.value)}>
             </input>
             <label for="maxDistance" class="form-label"></label>
             <input
               type="text"
               class="form-control"
-              id="maxDistance"
+              id="maxDistance" placeholder="Max distance"
               value={maxDistance} onChange={(e) => setMaxDistance(e.target.value)}>
             </input>
             <label for="minPrice" class="form-label"></label>
