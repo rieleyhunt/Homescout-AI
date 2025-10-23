@@ -1,7 +1,7 @@
 import express from "express";
-import { scrapeRealtor } from "../scrapers/realtorScraper";
-
+import { scrapeRealtor } from "../scrapers/realtorScraper.js";
 const router = express.Router();
+
 
 router.get("/realtor-scrape", async (req, res) => {
     const { location, maxDistance, minPrice, maxPrice } = req.query;

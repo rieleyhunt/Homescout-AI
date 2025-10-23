@@ -110,6 +110,8 @@ function App() {
               id="maxPrice"
               value={maxPrice} onChange={(e) => setMaxPrice(e.target.value)}>
             </input>
+            <button type="submit" class="btn btn-primary">Submit</button>
+
           </div>
         </form>
 
