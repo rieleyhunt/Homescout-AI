@@ -33,7 +33,6 @@ function App() {
   const [maxDistance, setMaxDistance] = useState("");
   const [minPrice, setMinPrice] = useState("");
   const [maxPrice, setMaxPrice] = useState("");
-  const [listings, setListings] = useState("");
 
   const handleScrape = async (e) => {
     e.preventDefault();
@@ -54,7 +53,8 @@ function App() {
       });
 
       const data = await res.json();
-      setListings(data.listings);
+      let listings = data.listings;
+      console.log(listings);
     } catch (err) {
       console.error("Error", err);
     }
@@ -123,13 +123,6 @@ function App() {
 
           </div>
         </form>
-
-      {listings && (
-        <div className="mt-3">
-          <h5>Listings:</h5>
-          <p>{listings}</p>
-        </div>
-      )}
 
       {response && (
         <div className="mt-3">
