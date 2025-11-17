@@ -1,25 +1,33 @@
-import logo from './logo.svg';
-import './App.css';
-import React, {useState} from "react";
+import logo from "./logo.svg";
+import "./App.css";
+import React, { useState } from "react";
 
 function App() {
   const [prompt, setPrompt] = useState("");
   const [response, setResponse] = useState("");
+  const [province, setProvince] = useState("");
+  const [city, setCity] = useState("");
+  const [maxDistance, setMaxDistance] = useState("");
+  const [minPrice, setMinPrice] = useState("");
+  const [maxPrice, setMaxPrice] = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
-      const res = await fetch ("http://localhost:5000/api/ai/chat", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          userId: "123",
-          message: prompt,
-        }),
-      });
+      const res = await fetch(
+        "http://localhost:5000/api/ai/chat-analyze-listings",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            userId: "123",
+            message: prompt,
+          }),
+        }
+      );
 
       const data = await res.json();
       setResponse(data.reply);
@@ -28,29 +36,26 @@ function App() {
     }
   };
 
-  const [province, setProvince] = useState("");
-  const [city, setCity] = useState("");
-  const [maxDistance, setMaxDistance] = useState("");
-  const [minPrice, setMinPrice] = useState("");
-  const [maxPrice, setMaxPrice] = useState("");
-
   const handleScrape = async (e) => {
     e.preventDefault();
 
     try {
-      const res = await fetch ("http://localhost:5000/api/scrape/realtor-scrape", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
+      const res = await fetch(
+        "http://localhost:5000/api/scrape/realtor-scrape",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
             province,
             city,
             maxDistance,
             minPrice,
             maxPrice,
-        }),
-      });
+          }),
+        }
+      );
 
       const data = await res.json();
       let listings = data.listings;
@@ -59,8 +64,6 @@ function App() {
       console.error("Error", err);
     }
   };
-
-
 
   return (
     <div className="App">
@@ -71,69 +74,81 @@ function App() {
         </p>
         <form onSubmit={handleSubmit}>
           <div class="mb-3">
-            <label for="promptInput" class="form-label">Ask me anything</label>
-            <input 
+            <label for="promptInput" class="form-label">
+              Ask me anything
+            </label>
+            <input
               type="text"
-              class="form-control" 
-              id="promptInput" placeholder="prompt" 
-              value={prompt} onChange={(e) => setPrompt(e.target.value)}>
-            </input>
-            <button type="submit" class="btn btn-primary">Submit</button>
+              class="form-control"
+              id="promptInput"
+              placeholder="prompt"
+              value={prompt}
+              onChange={(e) => setPrompt(e.target.value)}
+            ></input>
+            <button type="submit" class="btn btn-primary">
+              Submit
+            </button>
           </div>
         </form>
 
         <form onSubmit={handleScrape}>
           <div class="mb-3">
             <label for="provinceInput" class="form-label"></label>
-            <input 
+            <input
               type="text"
-              class="form-control" 
-              id="provinceInput" placeholder="Province/State" 
-              value={province} onChange={(e) => setProvince(e.target.value)}>
-            </input>
+              class="form-control"
+              id="provinceInput"
+              placeholder="Province/State"
+              value={province}
+              onChange={(e) => setProvince(e.target.value)}
+            ></input>
             <label for="cityInput" class="form-label"></label>
-            <input 
+            <input
               type="text"
-              class="form-control" 
-              id="cityInput" placeholder="City" 
-              value={city} onChange={(e) => setCity(e.target.value)}>
-            </input>
+              class="form-control"
+              id="cityInput"
+              placeholder="City"
+              value={city}
+              onChange={(e) => setCity(e.target.value)}
+            ></input>
             <label for="maxDistance" class="form-label"></label>
             <input
               type="text"
               class="form-control"
-              id="maxDistance" placeholder="Max distance"
-              value={maxDistance} onChange={(e) => setMaxDistance(e.target.value)}>
-            </input>
+              id="maxDistance"
+              placeholder="Max distance"
+              value={maxDistance}
+              onChange={(e) => setMaxDistance(e.target.value)}
+            ></input>
             <label for="minPrice" class="form-label"></label>
-              <input
-                type="text"
-                class="form-control"
-                id="minPrice"
-                value={minPrice} onChange={(e) => setMinPrice(e.target.value)}>
-              </input>
+            <input
+              type="text"
+              class="form-control"
+              id="minPrice"
+              value={minPrice}
+              onChange={(e) => setMinPrice(e.target.value)}
+            ></input>
             <label for="maxPrice" class="form-label"></label>
-              <input
+            <input
               type="text"
               class="form-control"
               id="maxPrice"
-              value={maxPrice} onChange={(e) => setMaxPrice(e.target.value)}>
-            </input>
-            <button type="submit" class="btn btn-primary">Submit</button>
-
+              value={maxPrice}
+              onChange={(e) => setMaxPrice(e.target.value)}
+            ></input>
+            <button type="submit" class="btn btn-primary">
+              Submit
+            </button>
           </div>
         </form>
 
-      {response && (
-        <div className="mt-3">
-          <h5>AI Response:</h5>
-          <p>{response}</p>
-        </div>
-      )}
-      
+        {response && (
+          <div className="mt-3">
+            <h5>AI Response:</h5>
+            <p>{response}</p>
+          </div>
+        )}
       </header>
-
-
     </div>
   );
 }

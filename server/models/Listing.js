@@ -1,9 +1,11 @@
-
 import mongoose from "mongoose";
 
-const propertySchema = new mongoose.Schema({
-    url: String,
-    body: String,
+const propertiesSchema = new mongoose.Schema({
+  price: String,
+  bedrooms: String,
+  bathrooms: String,
+  square_feet: String,
+  url: String,
 });
 
-export default mongoose.model("Properties", propertySchema);
+export default mongoose.model("Properties", propertiesSchema);
